@@ -1,0 +1,33 @@
+server:
+  port: 8888
+spring:
+  profiles:
+    include: password
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=source, api
+      routes:
+        - id: api_route
+          uri: http://localhost:9999  # api接口调用模拟接口，那么直接转发到模拟接口
+          predicates:
+            - Path=/api/**
+        - id: other_route
+          uri: http://localhost:7777  # 用户可见的，比如登录，注册，浏览接口等，那么直接转发到后台管理系统
+          predicates:
+            - Path=/apiUser/**
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+dubbo:
+  application:
+    name: api-gateway
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848

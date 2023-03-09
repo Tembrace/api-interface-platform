@@ -1,0 +1,47 @@
+server:
+  port: 7777
+  servlet:
+    context-path: /apiUser
+spring:
+  application:
+    name: api-backend
+  profiles:
+    active: dev
+    include: password
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/apihuoyouri
+    username: root
+    password: Aa123456
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  # session 失效时间（分钟）
+  session:
+    timeout: 86400
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete 
+      logic-delete-value: 1
+      logic-not-delete-value: 0 
+api:
+  client:
+    get-name:
+      access-key: 7ae3ffba7425028cb67f771fcf4825f8
+      secret-key: f8995877181ee0b8dc2b9e44a3768f91
+dubbo:
+  application:
+    name: api-backend
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    id: nacos-registry
+    address: nacos://localhost:8848
+    
+    
